@@ -58,41 +58,34 @@ public class SecurityConfig {
 
                         return configuration;
                     }
-                }));
+                }))
 
         //csrf disable
-        http
-                .csrf((auth) -> auth.disable());
+                .csrf((auth) -> auth.disable())
 
         //From 로그인 방식 disable
-        http
-                .formLogin((auth) -> auth.disable());
+                .formLogin((auth) -> auth.disable())
 
         //HTTP Basic 인증 방식 disable
-        http
-                .httpBasic((auth) -> auth.disable());
+                .httpBasic((auth) -> auth.disable())
 
         //JWTFilter 추가
-        http
-                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
 
         //oauth2
-        http
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
-                );
+                )
 
         //경로별 인가 작업
-        http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/my").hasRole("USER")
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
 
         //세션 설정 : STATELESS
-        http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
