@@ -1,4 +1,4 @@
-package com.github.hanjungho.oauth2jwttest.domain.entity.entity;
+package com.github.hanjungho.oauth2jwttest.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

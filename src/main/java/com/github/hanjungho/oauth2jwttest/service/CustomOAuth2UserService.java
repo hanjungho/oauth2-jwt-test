@@ -1,7 +1,7 @@
 package com.github.hanjungho.oauth2jwttest.service;
 
 import com.github.hanjungho.oauth2jwttest.domain.dto.*;
-import com.github.hanjungho.oauth2jwttest.domain.entity.entity.UserEntity;
+import com.github.hanjungho.oauth2jwttest.domain.entity.UserEntity;
 import com.github.hanjungho.oauth2jwttest.repository.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -31,9 +31,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
         }
-        else if (registrationId.equals("google")) {
+        else if (registrationId.equals("kakao")) {
 
-            oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
+            oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
         }
         else {
 
