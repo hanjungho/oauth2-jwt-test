@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: oauth2-jwt-test
+  profiles:
+    active: dev
