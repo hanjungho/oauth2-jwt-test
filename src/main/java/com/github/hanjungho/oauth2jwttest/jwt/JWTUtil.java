@@ -35,13 +35,21 @@ public class JWTUtil {
     }
 
     public String createJwt(String username, String role, Long expiredMs) {
-
-        return Jwts.builder()
-                .claim("username", username)
-                .claim("role", role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiredMs))
-                .signWith(secretKey)
-                .compact();
+        System.out.println("JWT 토큰 생성 - 사용자: " + username + ", 역할: " + role);
+        try {
+            String token = Jwts.builder()
+                    .claim("username", username)
+                    .claim("role", role)
+                    .issuedAt(new Date(System.currentTimeMillis()))
+                    .expiration(new Date(System.currentTimeMillis() + expiredMs))
+                    .signWith(secretKey)
+                    .compact();
+            System.out.println("JWT 토큰 생성 성공: " + token.substring(0, Math.min(token.length(), 10)) + "...");
+            return token;
+        } catch (Exception e) {
+            System.out.println("JWT 토큰 생성 중 오류 발생: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 }

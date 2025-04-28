@@ -5,6 +5,7 @@ import com.github.hanjungho.oauth2jwttest.jwt.JWTUtil;
 import com.github.hanjungho.oauth2jwttest.oauth2.CustomSuccessHandler;
 import com.github.hanjungho.oauth2jwttest.service.CustomOAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +26,9 @@ public class SecurityConfig {
     private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
 
+    @Value("${front.url}")
+    private String frontUrl;
+
     public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, CustomSuccessHandler customSuccessHandler, JWTUtil jwtUtil) {
 
         this.customOAuth2UserService = customOAuth2UserService;
@@ -43,7 +47,7 @@ public class SecurityConfig {
 
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -84,7 +88,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("my").hasRole("USER")
+                        .requestMatchers("/my").hasRole("USER")
                         .anyRequest().authenticated());
 
         //세션 설정 : STATELESS

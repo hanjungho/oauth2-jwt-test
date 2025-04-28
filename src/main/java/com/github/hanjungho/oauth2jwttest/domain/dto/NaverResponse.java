@@ -25,13 +25,15 @@ public class NaverResponse implements OAuth2Response{
 
     @Override
     public String getEmail() {
-
-        return attribute.get("email").toString();
+        // kakao_account에서 이메일 정보를 가져옵니다
+        return (attribute != null && attribute.containsKey("email")) ?
+                attribute.get("email").toString() : null;
     }
 
     @Override
     public String getName() {
-
-        return attribute.get("name").toString();
+        // properties에서 nickname 정보를 가져옵니다
+        return (attribute != null && attribute.containsKey("name")) ?
+                attribute.get("name").toString() : null;
     }
 }
